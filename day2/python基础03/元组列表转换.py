@@ -1,0 +1,6 @@
+tuple1 = (34,23,45,6,8,9)
+list1  = list(tuple1)
+list1.append(1000)
+list1.insert(2,1111)
+tuple1 = tuple(list1)
+print(tuple1)
