@@ -5,8 +5,3 @@ print("总价格：", Total_money)
 Actually_money = int(input("用户实际付款："))
 back_money = Actually_money - Total_money
 print("应找回：", back_money)
-
-
-
-
-
