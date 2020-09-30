@@ -31,7 +31,7 @@ DarkGreen = (0, 155, 0)  # 暗绿色
 DarkGray = (50, 50, 50)  # 暗灰色
 
 # 设置游戏的背景颜色(黑色)
-BGColor = Black
+BGCOLOR = Black
 
 # 设置游戏键盘的控制按键
 UP = "up"
@@ -119,7 +119,7 @@ def runGame():
                     terminate()
         # 检查蛇头是否撞到边缘，如果撞到则游戏结束
         if wormCoords[HEAD]['x'] == -1 or wormCoords[HEAD]['x'] == cell_width or \
-           wormCoords[HEAD]['y'] == -1 or wormCoords[HEAD]['x'] == cell_height:
+                wormCoords[HEAD]['y'] == -1 or wormCoords[HEAD]['x'] == cell_height:
             return
 
         # 检查蛇头是否吃到食物
@@ -150,11 +150,32 @@ def runGame():
             newHead = {'x': wormCoords[HEAD]['x'] + 1,
                        'y': wormCoords[HEAD]['y']}
 
+        # 将新增加的一块保存到蛇身的列表当中
+        wormCoords.insert(0, newHead)
+
+        # 重新填充背景颜色
+        DISPLAYSURE.fill(BGCOLOR)
+
+        # 绘制方格
+        drawGrid()
+
+        # 将蛇身所在的位置的所有方块绘制成绿色
+        drawWorm(wormCoords)
+
+        # 食物绘制成红色
+        drawApple(apple)
+
+        # 游戏分数
+        drawScore(len(wormCoords) - 3)
+
+        # 更新窗口显示
+        pygame.display.update()
+
+        # 更新蛇的速度
+        snake_speedCLOCK.tick(snake_speed)
 
 
-
-
-        # 在游戏的右下角绘制显示消息
+# 在游戏的右下角绘制显示消息
 def drawPressKeyMsg():
     pass
 
