@@ -52,7 +52,7 @@ def main():
     # 初始化游戏时钟，影响蛇移动的速度
     snake_speedClock = pygame.time.Clock()
     # 初始化窗口分辨率
-    DISPLAYSURE = pygame.display.set_mode(window_width, window_height)
+    DISPLAYSURE = pygame.display.set_mode((window_width, window_height))
     # 字体的设置
     BASICFONT = pygame.font.Font('freesansblod.ttf', 18)
     # 设置当前窗口的标题
@@ -172,7 +172,7 @@ def runGame():
         pygame.display.update()
 
         # 更新蛇的速度
-        snake_speedCLOCK.tick(snake_speed)
+        snake_speedClock.tick(snake_speed)
 
 
 # 在游戏的右下角绘制显示消息
@@ -182,7 +182,15 @@ def drawPressKeyMsg():
 
 # 在游戏的右下角绘制显示消息
 def drawPressKeyMsg():
-    pass
+    # 设置绘制提示消息"按任意键进入与游戏"，白色字体
+    pressKeySurf = BASICFONT.render('press any key to enter the game', True, white)
+
+    # 设置提示信息显示位置(左上角)
+    pressKeyRect = pressKeySurf.get_rect()
+    pressKeyRect.topleft = (window_width - 200, window_height - 30)
+
+    # 绘制游戏消息到提示窗口
+    DISPLAYSURE.blit(pressKeySurf, pressKeyRect)
 
 
 # 检查按键抬起事件
@@ -194,45 +202,194 @@ def checkForKeyPress():
     if len(KeyUpEvents) == 0:
         return None
 
+    # 按下 ESC 键
+    if keyUpEvents[0].key == K_ESCAPE:
+        terminate()
+
     # 返回按键事件对应的键值
     return KeyUpEvents[0].key
 
 
 # 显示游戏刚进入时的欢迎界面
 def showStartScreen():
-    pass
+    # 设置字体
+    titleFont = pygame.font.Font('freesansbold.ttf', 48)
+
+    # 渲染要显示的文本
+    titleSurf = titleFont.render("interesting  Snake", True, White, DarkGreen)
+
+    # 初始化欢迎画面的改变角度
+    degrees = 0
+    while True:
+        # 设置背景颜色
+        DISPLAYSURE.fill(BGCOLOR)
+        #  将要显示的文本进行旋转一定的角度，显示在窗口上
+        rotatedSurf1 = pygame.transform.rotate(titleSurf, degrees)
+        rotatedRect1 = rotatedSurf1.get_rect()
+
+        # 居中处理
+        rotatedRect1.center(window_width / 2, window_height / 2)
+
+        DISPLAYSURE.blit(rotatedSurf1, rotatedRect1)
+        drawPressKeyMsg()
+
+        # 检测到有按键按下时返回，退出欢迎界面
+        if checkForKeyPress():
+            # 清空事件列表
+            pygame.event.get()
+            return
+
+        # 更新界面显示
+        pygame.display.update()
+
+        # 设置一个时钟，影响欢迎界面的旋转速度
+        snake_speedClock.tick(20)
+
+        # 每帧旋转 3 度
+        degrees += 3
 
 
 # 终止游戏程序
 def terminate():
-    pass
+    # 卸载 pygame 中的游戏模块
+    pygame.quit()
+
+    # 系统退出
+    sys.exit()
 
 
 # 获取一个随机位置
 def getRandomLocation():
-    pass
-
+    return {"x": random.randint(0, cell_width - 1),
+            "y": random.randint(0, cell_height - 1)}
 
 # 显示游戏结束的画面
 def showGameOverScreen():
-    pass
+    # 渲染游戏结束时的文本
+    gameOverFont = pygame.font.Font("freesansbold.ttf", 100)
+    gameSurf = gameOverFont.render('Game', True, White)
+    overSurf = gameOverFont.render('Over', True, White)
+
+    # 文本显示所需要的区域
+    gameRect = gameSurf.get_rect
+    overRect = overSurf.get_rect
+    
+    # 文本显示位置的设置
+    gameRect.midtop = (window_width / 2, 10)
+    gameRect.midtop = (window_width / 2, gameRect)
+    
+    # 绘制文本到相应位置
+    DISPLAYSURE.blit(gameSurf, gameRect)
+    DISPLAYSURE.blit(overSurf, overRect)
+
+    # 按下任意键开始游戏
+    drawPressKeyMsg()
+
+    # 更新窗口界面显示
+    pygame.display.update()
+
+    # 设置画面等待时间 500ms
+    pygame.time.wait(500)
+
+    # 清除事件当中的任何按键
+    checkForKeyPress()
+
+    # 循环等待用户新的按键
+    while 1:
+        if checkForKeyPress():
+            pygame.event.get()
+            return
 
 
-# 绘制游戏分数
+# 绘制游戏的得分情况
 def drawScore(score):
-    pass
+    # 渲染游戏分数的位置
+    scoreSurf = BASICFONT.render("Score:%s" % (score), True, White)
+    scoreRect = scoreSurf.get_rect()
+    scoreRect.topleft = (window_width - 120, 10)
+
+    # 显示游戏分数到游戏窗口
+    DISPLAYSURE.blit(scoreSurf, scoreRect)
 
 
-# 将蛇身每个位置的方块绘制成绿色
+# 进蛇身每个位置的方块绘制成绿色
 def drawWorm():
-    pass
+    # 遍历蛇身的每个方块
+    for coord in wormCoords:
+        x = coord['x'] * cell_size
+        y = coord['x'] * cell_size
+
+        # 蛇身绘制成绿色
+        wormSegmentRect = pygame.Rect(x, y, cell_size)
+        pygame.draw.rect(DISPLAYSURE, DarkGreen, wormSegmentRect)
+
+        # 绘制蛇身内边框
+        wormInnersSegmentrect = pygame.Rect(
+            x + 4, y + 4, cell_size - 8, cell_size - 8
+        )
+
+        pygame.draw.rect(DISPLAYSURE, Green, wormInnersSegmentrect)
 
 
-# 绘制食物，将参数的位置绘制成红色
-def drawApple():
-    pass
+# 绘制食物，将参数的位置绘制成红色，表示食物
+def drawApple(coord):
+    x = coord['x' * cell_size]
+    y = coord['x' * cell_size]
+    appleRect = pygame.Rect(x, y, cell_size)
+    pygame.draw.rect(DISPLAYSURE, Red, appleRect)
 
 
 # 绘制游戏地图
 def drawGrid():
-    pass
+    # 在游戏窗口绘制灰色竖线
+    for x in range(0, window_width, cell_size):
+        pygame.draw.line(DISPLAYSURE, DarkGreen, DarkGray, (x, 0), (x, window_width))
+
+
+    # 在游戏窗口绘制暗灰色横线
+    for y in range(0, window_height, cell_size):
+        pygame.draw.line(DISPLAYSURE, DarkGreen, DarkGray, (0, y), (window_height, y))
+
+
+# 调用主函数，运行游戏
+if __name__ == "__main__":
+    try:
+        main()
+    except SystemExit:
+        pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
