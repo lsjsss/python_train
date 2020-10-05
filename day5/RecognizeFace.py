@@ -36,7 +36,7 @@ while 1:
         break
 
 # 关闭窗口
-cap.release()
+capt.release()
 cv.destroyAllWindows()
 
 
