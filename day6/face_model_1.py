@@ -40,7 +40,7 @@ def read_data(dirctory):
                 faces_dir[label].append(path)
 
     # 数据预处理
-    coedc = sp.labelEncoder()
+    codec = sp.labelEncoder()
     codec.fit(list(faces_dir.key()))
 
     x,y,z = [],[],[]
@@ -59,7 +59,7 @@ def read_data(dirctory):
     y = np.array(y)
     return codec, x, y, z
 
-coedc, train_x, train_y, train_z = read_data("faces\\training")
+codec, train_x, train_y, train_z = read_data("faces\\training")
 print("codec", codec)
 print("*"*20)
 print("train_x", train_x)
