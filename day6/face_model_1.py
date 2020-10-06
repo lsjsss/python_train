@@ -2,7 +2,7 @@
 import os
 
 # 导入 numpy 模块，用于做矩阵的运算
-import numpy
+import numpy as np
 
 # 导入 cv 模块
 import cv2 as cv
@@ -24,14 +24,48 @@ def read_data(dirctory):
 
     # curdir 表示当前目录， subdir 表示当前目录下的所有子目录
     for cur,subdir,files, in os.walk(dirctory):
+        for jpeg in (
+            file for file in files if file.endswith(".jpg")
+        ):
+            path = os.path.join(curdir, jpeg)
+            print("path:", path)
 
+            # 获取文件标签
+            label = path.split(os.path.sep)
+            label = label[-2]
+            print(label)
+            if label not in faces_dir:
+                faces_dir[label] = []
+            else:
+                faces_dir[label].append(path)
 
+    # 数据预处理
+    coedc = sp.labelEncoder()
+    codec.fit(list(faces_dir.key()))
 
+    x,y,z = [],[],[]
+    for label,filenames in faces_dir.items():
+        for filename in filenames:
+            # 局部二值模式，只能处理灰度图，进行灰度的转换
+            bgr = cv.imread(filename)
+            gray = cv.cvtColor(bgr, cv.COLOR_BGR2GRAY)
+            faces = face_detector.detectMultiScale(gray, 1.1, 2, minSize=(100, 100))
+            for l, t, w, h in faces:
+                a, b = int(w/2), int(h/2)
+                x.append(gray[t:t+h, l:l+w])
+                y.append(int(codec.transform))
+                cv.ellipse(bgr, (l+a, t+b), (a, b), 0, 0, 360, (255, 0, 255), 2)
+                z.append(bgr)
+    y = np.array(y)
+    return codec, x, y, z
 
-
-
-
-
-
-
+coedc, train_x, train_y, train_z = read_data("faces\\training")
+print("codec", codec)
+print("*"*20)
+print("train_x", train_x)
+print("*"*20)
+print("train_y", train_y)
+print("*"*20)
+print("train_z", train_z)
+# test_x, test_y, train_z
 
