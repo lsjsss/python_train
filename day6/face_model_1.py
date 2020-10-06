@@ -23,7 +23,7 @@ def read_data(dirctory):
     faces_dir = {}
 
     # curdir 表示当前目录， subdir 表示当前目录下的所有子目录
-    for cur,subdir,files, in os.walk(dirctory):
+    for curdir,subdir,files, in os.walk(dirctory):
         for jpeg in (
             file for file in files if file.endswith(".jpg")
         ):
