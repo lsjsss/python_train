@@ -17,12 +17,12 @@ while 1:
     print("noses:", noses)
 
     # 确定圆心目标，确定长短轴，进行画图确定五官
-    for l,t,w,h in faces:
-        a,b = int(w/2), int(h/2)
+    for l, t, w, h in faces:
+        a, b = int(w / 2), int(h / 2)
         cv.ellipse(image, (l + a, b + t), (a, b), 0, 0, 360, (255, 0, 13), 3)
 
-    for l,t,w,h in eyes:
-        a,b = int(w/2), int(h/2)
+    for l, t, w, h in eyes:
+        a, b = int(w / 2), int(h / 2)
         cv.ellipse(image, (l + a, b + t), (a, b), 0, 0, 360, (134, 234, 102), 3)
 
     for l, t, w, h in noses:
@@ -31,17 +31,9 @@ while 1:
 
     cv.imshow("VIDEOCAPTURE", image)
 
-
     if cv.waitKey(33) == 27:
         break
 
 # 关闭窗口
 capt.release()
 cv.destroyAllWindows()
-
-
-
-
-
-
-

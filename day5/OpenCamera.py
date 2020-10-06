@@ -10,7 +10,7 @@ while 1:
     print(image)
 
     # 窗口显示
-    image = cv.resize(image, None, fx = 0.8, fy = 0.8, interpolation = cv.INTER_AREA)
+    image = cv.resize(image, None, fx=0.8, fy=0.8, interpolation=cv.INTER_AREA)
     cv.imshow("VideoCapter", image)
 
     # 设置退出机制，按下ESC退出程序
@@ -20,7 +20,3 @@ while 1:
 # 主要释放已经调用的摄像头，避免下次调用的失误(关闭窗口)
 capt.release()
 cv.destroyAllWindows()
-
-
-
-
