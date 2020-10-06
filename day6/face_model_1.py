@@ -50,10 +50,11 @@ def read_data(dirctory):
             bgr = cv.imread(filename)
             gray = cv.cvtColor(bgr, cv.COLOR_BGR2GRAY)
             faces = face_detector.detectMultiScale(gray, 1.1, 2, minSize=(100, 100))
+            
             for l, t, w, h in faces:
                 a, b = int(w/2), int(h/2)
                 x.append(gray[t:t+h, l:l+w])
-                y.append(int(codec.transform))
+                y.append(int(codec.transform([label])[0]))
                 cv.ellipse(bgr, (l+a, t+b), (a, b), 0, 0, 360, (255, 0, 255), 2)
                 z.append(bgr)
     y = np.array(y)
