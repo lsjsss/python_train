@@ -69,10 +69,10 @@ codec, train_x, train_y, train_z = read_data("faces\\training")
 # print("*"*20)
 # print("train_z", train_z)
 
-_, test_x, test_y, train_z = read_data("faces\\testing")
+_, test_x, test_y, test_z = read_data("faces\\testing")
 
 # 用局部二值模式直方图建立人脸识别模型
-model = cv.face.LBPHFaceRcognizer_create()
+model = cv.face.LBPHFaceRecognizer_create()
 model.train(train_x, train_y)
 pred_test_y = []
 for x in test_x:
@@ -93,6 +93,6 @@ while not escape:
         cv.putText(image, text, (10, 60), cv.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255), 6)
         cv.imshow("Recognizing Face....", image)
 
-        if cv.waitkey(33) == 27:
+        if cv.waitKey(33) == 27:
             escape = True
             break
