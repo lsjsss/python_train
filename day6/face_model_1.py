@@ -40,8 +40,8 @@ def read_data(dirctory):
                 faces_dir[label].append(path)
 
     # 数据预处理
-    codec = sp.labelEncoder()
-    codec.fit(list(faces_dir.key()))
+    codec = sp.LabelEncoder()
+    codec.fit(list(faces_dir.keys()))
 
     x,y,z = [],[],[]
     for label,filenames in faces_dir.items():
