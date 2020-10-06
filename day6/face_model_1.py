@@ -50,7 +50,7 @@ def read_data(dirctory):
             bgr = cv.imread(filename)
             gray = cv.cvtColor(bgr, cv.COLOR_BGR2GRAY)
             faces = face_detector.detectMultiScale(gray, 1.1, 2, minSize=(100, 100))
-            
+
             for l, t, w, h in faces:
                 a, b = int(w/2), int(h/2)
                 x.append(gray[t:t+h, l:l+w])
@@ -61,12 +61,38 @@ def read_data(dirctory):
     return codec, x, y, z
 
 codec, train_x, train_y, train_z = read_data("faces\\training")
-print("codec", codec)
-print("*"*20)
-print("train_x", train_x)
-print("*"*20)
-print("train_y", train_y)
-print("*"*20)
-print("train_z", train_z)
-# test_x, test_y, train_z
+# print("codec", codec)
+# print("*"*20)
+# print("train_x", train_x)
+# print("*"*20)
+# print("train_y", train_y)
+# print("*"*20)
+# print("train_z", train_z)
 
+_, test_x, test_y, train_z = read_data("faces\\testing")
+
+# 用局部二值模式直方图建立人脸识别模型
+model = cv.face.LBPHFaceRcognizer_create()
+model.train(train_x, train_y)
+pred_test_y = []
+for x in test_x:
+    y = model.predict(x)
+    print(y)
+    pred_test_y.append(y[0])
+
+escape = False
+while not escape:
+    for code, pred_code, image in zip(test_y,pred_test_y, test_z):
+        label = codec.inverse_transform([code])
+        print("label:", label)
+        label = label[0]
+        pred_label = codec.inverse_transform([pred_code])
+        print("pred_label:", pred_label)
+
+        text = "{}{}{}".format(label, "==" if label == pred_label else "!=", pred_label)
+        cv.putText(image, text, (10, 60), cv.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255), 6)
+        cv.imshow("Recognizing Face....", image)
+
+        if cv.waitkey(33) == 27:
+            escape = True
+            break
