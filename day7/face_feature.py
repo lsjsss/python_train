@@ -17,7 +17,10 @@ for face_landmarks in face_landmarks_list:
     for facial_feature in face_landmarks.keys():
         print("the {} in this face has the following points: {}".format(facial_feature, face_landmarks[facial_feature]))
 
+    for facial_feature in face_landmarks.keys():
+        d.line(face_landmarks[facial_feature], width = 3)
 
+pil_image.show()
 
 
 
