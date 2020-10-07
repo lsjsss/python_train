@@ -86,7 +86,7 @@ while not escape:
         label = codec.inverse_transform([code])
         print("label:", label)
         label = label[0]
-        pred_label = codec.inverse_transform([pred_code])
+        pred_label = codec.inverse_transform([pred_code])[0]
         print("pred_label:", pred_label)
 
         text = "{}{}{}".format(label, "==" if label == pred_label else "!=", pred_label)
