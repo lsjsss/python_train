@@ -67,7 +67,7 @@ codec, train_x, train_y, train_z = read_data("faces\\training")
 # print("*"*20)
 # print("train_y", train_y)
 # print("*"*20)
-# print("train_z", train_z) -
+# print("train_z", train_z)
 
 _, test_x, test_y, test_z = read_data("faces\\testing")
 
