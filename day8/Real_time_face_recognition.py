@@ -16,8 +16,8 @@ zhuyue_image = face_recognition.load_image_file("faces_data\\zhuyue1.jpg")
 print("zhuyue_image", zhuyue_image)
 
 # 通过图片数据对人脸特征进数据行识别提取
-zwq_face_encoding = face_recognition.face_encodings(zwq_image)
-zhuyue_face_encoding = face_recognition.face_encodings(zhuyue_image)
+zwq_face_encoding = face_recognition.face_encodings(zwq_image)[0]
+zhuyue_face_encoding = face_recognition.face_encodings(zhuyue_image)[0]
 
 # 查看人脸特征信息
 print("zwq_face_encoding", zwq_face_encoding)
@@ -68,6 +68,12 @@ while True:
                 known_face_encodings, face_encoding, tolerance=0.4
             )
             print("matches:", matches)
+            # 对 matches 进行判断
+            if True in matches:
+                # 有 True 存在与 matches 当中的是否，说明有匹配成功的， 那接下来要找出 True 对应的标签， 从而要找索引
+                first_match_index = matches.iundex(True)
+                print("first_match_index", first_match_index)
+
 
         if cv.waitKey(33) == 27:
             break
