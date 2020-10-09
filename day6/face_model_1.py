@@ -99,6 +99,6 @@ while not escape:
         cv.putText(image, text, (10, 60), cv.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255), 6)
         cv.imshow("Recognizing Face....", image)
 
-        if cv.waitKey(1000) == 27:
+        if cv.waitKey(33) == 27:
             escape = True
             break
