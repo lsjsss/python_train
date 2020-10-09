@@ -7,25 +7,33 @@ import face_recognition
 video_capture = cv.VideoCapture(0)
 
 # face_reconition 加载图片,命名时使用名字缩写
-zwq_image = face_recognition.load_image_file("faces_data\\zwq1.jpg")
+zwq1_image = face_recognition.load_image_file("faces_data\\zwq1.jpg")
+zwq2_image = face_recognition.load_image_file("faces_data\\zwq2.jpg")
 
 # 输出图片效果
-print("zwq_image", zwq_image)
+print("zwq_image1", zwq1_image)
+print("zwq_image2", zwq2_image)
 
-zhuyue_image = face_recognition.load_image_file("faces_data\\zhuyue1.jpg")
-print("zhuyue_image", zhuyue_image)
+zhuyue1_image = face_recognition.load_image_file("faces_data\\zhuyue1.jpg")
+zhuyue2_image = face_recognition.load_image_file("faces_data\\zhuyue2.jpg")
+print("zhuyue_image1", zhuyue1_image)
+print("zhuyue_image2", zhuyue2_image)
 
 # 通过图片数据对人脸特征进数据行识别提取
-zwq_face_encoding = face_recognition.face_encodings(zwq_image)[0]
-zhuyue_face_encoding = face_recognition.face_encodings(zhuyue_image)[0]
+zwq_face_encoding1 = face_recognition.face_encodings(zwq1_image)[0]
+zwq_face_encoding2 = face_recognition.face_encodings(zwq2_image)[0]
+zhuyue_face_encoding1 = face_recognition.face_encodings(zhuyue1_image)[0]
+zhuyue_face_encoding2 = face_recognition.face_encodings(zhuyue2_image)[0]
 
 # 查看人脸特征信息
-print("zwq_face_encoding", zwq_face_encoding)
+print("zwq_face_encoding", zwq_face_encoding1)
 
 # 建立列表存放人脸特征信息和对应的人名信息
 known_face_encodings = [
-    zwq_face_encoding,
-    zhuyue_face_encoding
+    zwq_face_encoding1,
+    zwq_face_encoding2,
+    zhuyue_face_encoding1,
+    zhuyue_face_encoding2
 ]
 
 # 建立已知的姓名标签
@@ -65,7 +73,7 @@ while True:
             # 進行人臉比較
             matches = face_recognition.compare_faces(
                 # matches 表示的是动态人脸数与数据库当中的人脸天特征数据匹配 tolerance 阈值大小
-                known_face_encodings, face_encoding, tolerance=0.4
+                known_face_encodings, face_encoding, tolerance=0.45
             )
             print("matches:", matches)
             # 对 matches 进行判断
