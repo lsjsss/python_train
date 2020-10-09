@@ -71,11 +71,38 @@ while True:
             # 对 matches 进行判断
             if True in matches:
                 # 有 True 存在与 matches 当中的是否，说明有匹配成功的， 那接下来要找出 True 对应的标签， 从而要找索引
-                first_match_index = matches.iundex(True)
+                first_match_index = matches.index(True)
                 print("first_match_index", first_match_index)
 
+                # 根据索引找出名字标签
+                name = known_face_names[first_match_index]
+                face_names.append(name)
+                print("face_names", face_names)
 
-        if cv.waitKey(33) == 27:
+    process_this_frame = not process_this_frame
+
+    # 实施了年可视化展示
+    for (top, right, bottom, left), name in zip(face_locations, face_names):
+        # 因为之前处理图像时，缩放了四分之一， 所以要对框定的人脸恢复原样
+        top *= 4
+        right *= 4
+        bottom *= 4
+        left *= 4
+
+        # 确定人脸框, 颜色为蓝色
+        cv.rectangle(frame, (left, top), (right, bottom), (0, 0, 255))
+
+        # 在人脸框下方添加标签，颜色为蓝色
+        cv.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv.FILLED)
+
+        # 设置字体
+        font = cv.FONT_HERSHEY_DUPLEX
+        cv.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 2)
+
+        # 展示
+        cv.imshow("Video_capture", frame)
+
+        if cv.waitKey(1) == 27:
             break
 
 video_capture.release()
