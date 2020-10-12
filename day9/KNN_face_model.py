@@ -49,7 +49,7 @@ def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo="ball_tree
         print(len(x))
         if verbose:
             print("Chose n_neighbors automatically:", n_neighbors)
-    knn_clf = neighbors.KNeighborsClassfier(n_neighbors = n_neighbors, weights = 'distance')
+    knn_clf = neighbors.KNeighborsClassfier(n_neighbors=n_neighbors, weights='distance')
 
     knn_clf.fit(x, y)
 
@@ -60,7 +60,8 @@ def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo="ball_tree
 
     return knn_clf
 
-train("knn_model_faces\\train")
+
+# train("knn_model_faces\\train", model_save_path='trained_model_clf', n_neighbors=None)
 
 """
 用训练好的分类器来做测试
@@ -70,8 +71,35 @@ distance_threshold：距离阈值，值越大，就越马虎,容易误判
 """
 
 
-def predict(x_img_path, knn_clf=None, mode_path=None, distance_thresold=0.6):
-    pass
+def predict(x_img_path, knn_clf=None, model_path=None, distance_thresold=0.6):
+    if not os.path.isfile(x_img_path) or os.path.splitext()[1][1:] not in ALLOWED_EXTENSIONS:
+        raise Exception("Invalid image path: {}", format(x_img_path))
+
+    # 加载训练好的模型
+    if knn_clf is None:
+        with open(model_path, 'rb') as f:
+            knn_clf = pickle.load(f)
+
+    # 加载图像文件并查找人脸位置
+    x_img = face_recognition.load_image_file(x_img_path)
+    x_face_locations = face_recognition.face_locations(x_img)
+
+    # 如果没有找到人脸返回空值
+    if len(x_face_locations) == 0:
+        return []
+
+    # 在测试集中，找到人脸特征
+    face_encodings = face_recognition.face_encodings(x_img, known_face_locations=x_face_locations)
+
+    # 用训练好的 KNN 模型为测试集人脸做最好的匹配
+    closest_distance = knn_clf.kneighbors(face_encodings, n_neighbors=1)
+    print("closest_distance", closest_distance)
+
+    are_matches = [closest_distance[0][i][0] <= distance_thresold for i in model_path(len(x_face_locations))]
+    print("are_matches", are_matches)
+
+
+predict("knn_model_faces\\train\\Bob\\image_0001.jpg", model_path="trained_knn_clf")
 
 
 # 显示人脸识别的结果
