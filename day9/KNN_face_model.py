@@ -61,7 +61,7 @@ def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo="ball_tree
     return knn_clf
 
 
-# train("knn_model_faces\\train", model_save_path='trained_model_clf', n_neighbors=None)
+train("knn_model_faces\\train", model_save_path='trained_model_clf', n_neighbors= 2)
 
 """
 用训练好的分类器来做测试
@@ -95,7 +95,7 @@ def predict(x_img_path, knn_clf=None, model_path=None, distance_thresold=0.6):
     closest_distance = knn_clf.kneighbors(face_encodings, n_neighbors=1)
     print("closest_distance", closest_distance)
 
-    are_matches = [closest_distance[0][i][0] <= distance_thresold for i in model_path(len(x_face_locations))]
+    are_matches = [closest_distance[0][i][0] <= distance_thresold for i in range(len(x_face_locations))]
     print("are_matches", are_matches)
 
 
