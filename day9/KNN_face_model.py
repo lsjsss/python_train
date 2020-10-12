@@ -1,9 +1,14 @@
+import math
 import os
 import os.path
+import pickle
+
 import face_recognition
 from face_recognition.face_detection_cli import image_files_in_folder
 
 # 允许加载的图片类型
+from sklearn import neighbors
+
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 """
 根据 knn 算法训练一个人脸识别模型，train_dir 包括的是每一个已知人名子目录以及名字，
@@ -38,6 +43,22 @@ def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo="ball_tree
                 y.append(class_dir)
                 print("y", y)
 
+    # 确定 K 值
+    if n_neighbors is None:
+        n_neighbors = int(round(math.sqrt(len(x))))
+        print(len(x))
+        if verbose:
+            print("Chose n_neighbors automatically:", n_neighbors)
+    knn_clf = neighbors.KNeighborsClassfier(n_neighbors = n_neighbors, weights = 'distance')
+
+    knn_clf.fit(x, y)
+
+    # 保存训练好的 KNN 分类器
+    if model_save_path is not None:
+        with open(model_save_path, "wb") as f:
+            pickle.dump(knn_clf, f)
+
+    return knn_clf
 
 train("knn_model_faces\\train")
 
