@@ -66,7 +66,7 @@ def read_data(dirctory):
     return codec, x, y, z
 
 
-codec, train_x, train_y, train_z = read_data("faces\\training")
+codec, train_x, train_y, train_z = read_data("faces\\train")
 # print("codec", codec)
 # print("*"*20)
 # print("train_x", train_x)
