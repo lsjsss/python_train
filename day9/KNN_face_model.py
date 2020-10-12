@@ -1,5 +1,6 @@
 import os
 import os.path
+from face_recognition.face_detection_cli import image_files_in_folder
 
 # 允许加载的图片类型
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -11,8 +12,16 @@ knn_algo 是模型选择的算法，返回值是根据所给的数据训练好�
 
 
 def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo="ball_tree", verbose=False):
-    pass
+    # 设定输入输出值
+    x = []
+    y = []
 
+    # 循环遍历训练集当中的每个人
+    for class_dir in os.listdir(train_dir):
+        if not os.path.isdir(os.path.join(train_dir)):
+            continue
+        # 循环遍历当前人员的每个训练图片
+        for img_path in image_files_in_folder(os.path.join(train_dir, class_dir)):
 
 """
 用训练好的分类器来做测试
