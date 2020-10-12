@@ -11,7 +11,7 @@ knn_algo 是模型选择的算法，返回值是根据所给的数据训练好�
 """
 
 
-def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo="ball_tree", verbose=False):
+def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo="ball_tree", verbose=False, face_recogniton=None):
     # 设定输入输出值
     x = []
     y = []
@@ -22,6 +22,22 @@ def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo="ball_tree
             continue
         # 循环遍历当前人员的每个训练图片
         for img_path in image_files_in_folder(os.path.join(train_dir, class_dir)):
+            image = face_recogniton.load_image_file(img_path)
+            face_bounding_boxes = face_recogniton.face_locations(image)
+            if len(face_bounding_boxes) != 1:
+                if verbose:
+                    if len(face_bounding_boxes) < 1:
+                        print("Image {} not in suitable for training:{}", format(img_path, "Did not find a face"))
+                    else:
+                        print("Image {} not in suitable for training:{}", format(img_path, "Found more than one face"))
+            else:
+                # 为训练集添加当前的人脸特征数据
+                x.append(face_recogniton.face_locations(image, known_face_locations = face_bounding_boxes)[0])
+                print("x", x, "\ny", y)
+                y.append(class_dir)
+
+
+
 
 """
 用训练好的分类器来做测试
