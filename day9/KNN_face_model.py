@@ -33,3 +33,4 @@ def show_prediction_labels_on_image(image_path, predictions):
 
 if __name__ == "__main__":
     pass
+
