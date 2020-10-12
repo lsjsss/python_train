@@ -49,7 +49,7 @@ def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo="ball_tree
         print(len(x))
         if verbose:
             print("Chose n_neighbors automatically:", n_neighbors)
-    knn_clf = neighbors.KNeighborsClassfier(n_neighbors=n_neighbors, weights='distance')
+    knn_clf = neighbors.KNeighborsClassfier(n_neighbors=n_neighbors, algorithm=knn_algo, weights='distance')
 
     knn_clf.fit(x, y)
 
@@ -61,7 +61,7 @@ def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo="ball_tree
     return knn_clf
 
 
-train("knn_model_faces\\train", model_save_path='trained_model_clf', n_neighbors= 2)
+train("knn_model_faces\\train", model_save_path='trained_model_clf', n_neighbors=2)
 
 """
 用训练好的分类器来做测试
