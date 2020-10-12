@@ -22,13 +22,12 @@ cell_weight = int(window_width / cell_size)  # Cell Width
 cell_height = int(window_height / cell_size)  # Cellc Height
 
 # 定义游戏元素的颜色
-White = (255, 255, 255) # 白色
-Black = (0, 0, 0) # 黑色
+White = (255, 255, 255)  # 白色
+Black = (0, 0, 0)  # 黑色
 Red = (255, 0, 0)  # 红色
-Green = (0, 255, 0) # 绿色
-DARKGreen = (0, 155, 0) # 暗绿色
-DARKGRAY = (40, 40, 40) # 暗灰色
-
+Green = (0, 255, 0)  # 绿色
+DARKGreen = (0, 155, 0)  # 暗绿色
+DARKGRAY = (40, 40, 40)  # 暗灰色
 
 #  设置游戏背景颜色（黑色）
 BGCOLOR = Black  # Background color
@@ -41,6 +40,7 @@ RIGHT = 'right'
 
 # 设置蛇头索引
 HEAD = 0  # Syntactic sugar: index of the snake's head
+
 
 # 定义游戏主函数
 def main():
@@ -63,6 +63,7 @@ def main():
     while True:
         runGame()
         showGameOverScreen()
+
 
 # 游戏运行函数
 def runGame():
@@ -113,7 +114,7 @@ def runGame():
             return  # game over
         # 检查蛇头是否撞到了自己，如果撞到游戏结束
         for wormBody in wormCoords[1:]:
-            if wormBody['x'] == wormCoords[HEAD]['x'] and\
+            if wormBody['x'] == wormCoords[HEAD]['x'] and \
                     wormBody['y'] == wormCoords[HEAD]['y']:
                 return  # game over
 
@@ -168,6 +169,7 @@ def runGame():
         # 更新蛇的移动速度
         snake_speedCLOCK.tick(snake_speed)
 
+
 # 在游戏右下角绘制提示消息
 def drawPressKeyMsg():
     # 设置绘制提示消息内容“按任意键进入游戏”，白色字体
@@ -177,6 +179,7 @@ def drawPressKeyMsg():
     pressKeyRect.topleft = (window_width - 200, window_height - 30)
     # 绘制提示消息到游戏窗口
     DISPLAYSURF.blit(pressKeySurf, pressKeyRect)
+
 
 # 检查按键抬起事件
 def checkForKeyPress():
@@ -192,6 +195,7 @@ def checkForKeyPress():
         terminate()
     # 返回按键事件对应的键值
     return keyUpEvents[0].key
+
 
 # 显示游戏刚进入时的欢迎画面
 def showStartScreen():
@@ -222,17 +226,20 @@ def showStartScreen():
         # 每帧旋转3度
         degrees += 3
 
+
 # 终止游戏程序
 def terminate():
-    # 卸载pygame的所有模块
+    # 卸载 pygame 的所有模块
     pygame.quit()
     # 系统退出
     sys.exit()
+
 
 # 获取一个随机位置
 def getRandomLocation():
     return {'x': random.randint(0, cell_weight - 1),
             'y': random.randint(0, cell_height - 1)}
+
 
 # 显示游戏结束的画面
 def showGameOverScreen():
@@ -264,6 +271,7 @@ def showGameOverScreen():
             pygame.event.get()  # 清空事件列表，clear event queue
             return
 
+
 # 绘制游戏分数
 def drawScore(score):
     # 渲染游戏分数字体和位置
@@ -272,6 +280,7 @@ def drawScore(score):
     scoreRect.topleft = (window_width - 120, 10)
     # 显示游戏分数到游戏窗口
     DISPLAYSURF.blit(scoreSurf, scoreRect)
+
 
 # 将蛇身每个位置的方块绘制为绿色
 def drawWorm(wormCoords):
