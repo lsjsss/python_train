@@ -32,12 +32,13 @@ def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo="ball_tree
                         print("Image {} not in suitable for training:{}", format(img_path, "Found more than one face"))
             else:
                 # 为训练集添加当前的人脸特征数据
-                x.append(face_recogniton.face_locations(image, known_face_locations = face_bounding_boxes)[0])
-                print("x", x, "\ny", y)
+                x.append(face_recogniton.face_locations(image, known_face_locations=face_bounding_boxes)[0])
+                print("x", x)
                 y.append(class_dir)
+                print("y", y)
 
 
-
+train("knn_model_faces\\train")
 
 """
 用训练好的分类器来做测试
@@ -58,4 +59,3 @@ def show_prediction_labels_on_image(image_path, predictions):
 
 if __name__ == "__main__":
     pass
-
