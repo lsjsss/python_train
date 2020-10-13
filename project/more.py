@@ -5,7 +5,6 @@ import numpy as np
 # 开启摄像头
 def video_start():
     capture = cv.VideoCapture(0)                # 开启摄像头
-    # dst = None
     while True:
         ret, image = capture.read()
         image = cv.flip(image, 1)               # 图像反转
