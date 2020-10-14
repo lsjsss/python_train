@@ -17,7 +17,7 @@ while True:
     small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
 
     # 查找当前视频帧中的所有面部和面部编码
-    face_locations = face_recognition.face_locations(frame, model="cnn")
+    face_locations = face_recognition.face_locations(small_frame, model="cnn")
 
     # 显示模糊后的效果
     for top, right, bottom, left in face_locations:
