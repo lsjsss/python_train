@@ -2,7 +2,7 @@ from PIL import Image, ImageDraw
 import face_recognition
 
 # 将jpg文件加载到numpy数组中
-image = face_recognition.load_image_file("F:\\PycharmProject\\python_train-2020.9\\day8\\faces_data\\ycd.jpg")
+image = face_recognition.load_image_file("/day8/faces_data/ycd.jpg")
 
 # 查找图像中所有面部的所有面部特征
 face_landmarks_list = face_recognition.face_landmarks(image)
