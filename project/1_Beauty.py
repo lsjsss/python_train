@@ -1,6 +1,9 @@
 from PIL import Image, ImageDraw
 import face_recognition
 
+'''
+图片美颜
+'''
 # 加载图片，将 jpg 文件加载到 numpy 数组中
 image = face_recognition.load_image_file("F:\\PycharmProject\\python_train-2020.9\\day8\\faces_data\\zwq1.jpg")
 
@@ -9,7 +12,10 @@ face_landmarks_list = face_recognition.face_landmarks(image)
 
 # 从导出阵列接口的对象创建一个图像存储器
 pil_image = Image.fromarray(image)
+
+# 遍历面部特征
 for face_landmarks in face_landmarks_list:
+    # 设置图像填充模式为 RGBA
     d = ImageDraw.Draw(pil_image, 'RGBA')
 
     # 画眉毛轮廓
