@@ -15,7 +15,6 @@ for face_landmarks in face_landmarks_list:
     # 画眉毛轮廓
     d.polygon(face_landmarks['left_eyebrow'], fill=(68, 54, 39, 128))
     d.polygon(face_landmarks['right_eyebrow'], fill=(68, 54, 39, 128))
-
     # 填充眉毛
     d.line(face_landmarks['left_eyebrow'], fill=(68, 54, 39, 150), width=5)
     d.line(face_landmarks['right_eyebrow'], fill=(68, 54, 39, 150), width=5)
@@ -30,7 +29,6 @@ for face_landmarks in face_landmarks_list:
     # 眼睛轮廓
     d.polygon(face_landmarks['left_eye'], fill=(255, 255, 255, 30))
     d.polygon(face_landmarks['right_eye'], fill=(255, 255, 255, 30))
-
     # 绘制眼线
     d.line(face_landmarks['left_eye'] + [face_landmarks['left_eye'][0]], fill=(0, 0, 0, 110), width=6)
     d.line(face_landmarks['right_eye'] + [face_landmarks['right_eye'][0]], fill=(0, 0, 0, 110), width=6)
