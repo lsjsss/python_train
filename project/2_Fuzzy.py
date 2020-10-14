@@ -3,9 +3,7 @@ import cv2
 import cv2 as cv
 
 '''
-这是视频中人脸模糊的演示。请注意：此示例要求仅从网络摄像头读取时安装OpenCV（“ cv2”库）。
-使用face_recognition库*不需要* OpenCV。仅当您要运行此特定演示时才需要。
-如果您在安装它时遇到问题，请尝试其他不需要它的演示。获取对网络摄像头＃0的引用（默认值）
+使用摄像头识别面部对面部进行模糊
 '''
 
 # 打开摄像头
@@ -48,6 +46,6 @@ while True:
     if cv.waitKey(33) == 27:
         break
 
-# 主要释放已经调用的摄像头，避免下次调用的失误(关闭窗口)
+# 释放已经调用的摄像头，避免下次调用的失误(关闭窗口)
 video_capture.release()
 cv2.destroyAllWindows()
