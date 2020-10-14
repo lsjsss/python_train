@@ -15,7 +15,7 @@ pil_image = Image.fromarray(image)
 
 # 遍历面部特征
 for face_landmarks in face_landmarks_list:
-    # 设置图像填充模式为 RGBA
+    # 设置图像填充模式为 RGBA, 对图像进行填充
     d = ImageDraw.Draw(pil_image, 'RGBA')
 
     # 画眉毛轮廓
