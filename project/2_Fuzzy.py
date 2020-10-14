@@ -8,6 +8,7 @@ import cv2 as cv
 如果您在安装它时遇到问题，请尝试其他不需要它的演示。获取对网络摄像头＃0的引用（默认值）
 '''
 
+# 打开摄像头
 video_capture = cv2.VideoCapture(0)
 
 # 初始化面部位置变量
@@ -43,10 +44,10 @@ while True:
     # 显示结果图像
     cv2.imshow('Video', frame)
 
-    # 设置退出机制，按下ESC退出程序
+    # 按下ESC退出程序
     if cv.waitKey(33) == 27:
         break
 
-# 释放手柄到网络摄像头
+# 主要释放已经调用的摄像头，避免下次调用的失误(关闭窗口)
 video_capture.release()
 cv2.destroyAllWindows()
