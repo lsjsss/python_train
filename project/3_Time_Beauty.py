@@ -62,14 +62,8 @@ while True:
             d.line(face_landmarks['left_eye'] + [face_landmarks['left_eye'][0]], fill=(0, 0, 0, 110), width=6)
             d.line(face_landmarks['right_eye'] + [face_landmarks['right_eye'][0]], fill=(0, 0, 0, 110), width=6)
 
-        # # 使用高斯模糊模糊人脸图像
-        # face_image = cv2.GaussianBlur(face_image, (99, 99), 30)
-
         # 将模糊后的脸部区域放回图像中
         frame[top:bottom, left:right] = pil_image
-
-    # 显示结果图像
-    # pil_image.show()
 
     # 显示结果图像
     cv2.imshow('Video', frame)
